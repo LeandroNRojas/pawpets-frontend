@@ -1,0 +1,256 @@
+/* ===== RESET Y VARIABLES ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primario: #ff8a3d;
+  --color-secundario: #2c7a7b;
+  --color-oscuro: #22303c;
+  --color-claro: #fef6ee;
+  --color-error: #d64545;
+  --color-exito: #2f9e44;
+  --fuente-base: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--fuente-base);
+  color: var(--color-oscuro);
+  background-color: var(--color-claro);
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ===== HEADER Y NAV (se repite en todas las páginas) ===== */
+header {
+  background-color: var(--color-oscuro);
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-primario);
+}
+
+nav ul {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover,
+nav a:focus {
+  color: var(--color-primario);
+}
+
+/* ===== MAIN / SECCIONES ===== */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.hero {
+  background-color: var(--color-secundario);
+  color: #fff;
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--color-primario);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s, background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #e5732a;
+  transform: translateY(-2px);
+}
+
+/* ===== TARJETAS DE PRODUCTOS / CATEGORIAS / BLOG ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card img {
+  height: 160px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-body h3 {
+  margin-bottom: 0.5rem;
+}
+
+section > h2 {
+  margin-bottom: 1.25rem;
+  color: var(--color-secundario);
+}
+
+/* ===== VIDEO EMBEBIDO ===== */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 2.5rem;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ===== FORMULARIOS (login, registro, contacto) ===== */
+form {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.campo {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: 2px solid var(--color-secundario);
+}
+
+.mensaje-error {
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  min-height: 1.1rem;
+}
+
+.campo.invalido input,
+.campo.invalido textarea {
+  border-color: var(--color-error);
+}
+
+.campo.valido input,
+.campo.valido textarea {
+  border-color: var(--color-exito);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background-color: var(--color-oscuro);
+  color: #fff;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+.footer-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.footer-contenido h3 {
+  margin-bottom: 0.75rem;
+  color: var(--color-primario);
+}
+
+.footer-contenido a {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #ddd;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #444;
+  font-size: 0.85rem;
+  color: #aaa;
+}
