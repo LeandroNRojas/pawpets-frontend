@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos | PawPets</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">🐾 PawPets</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li><a href="carrito.html">Carrito</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="registro.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>Nuestros Productos</h1>
+      <p>Alimentos premium, accesorios, juguetes y farmacia veterinaria para tu mascota.</p>
+    </section>
+
+    <section id="filtros">
+      <h2>Buscar productos</h2>
+      <form id="form-filtro" autocomplete="on">
+        <div class="campo">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria" autocomplete="off">
+            <option value="todos">Todas las categorías</option>
+            <option value="perro">Alimentos Perro</option>
+            <option value="gato">Alimentos Gato</option>
+            <option value="juguetes">Juguetes &amp; Accesorios</option>
+            <option value="salud">Salud</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="busqueda">Buscar por nombre</label>
+          <input type="text" id="busqueda" name="busqueda" placeholder="Ej: snack, arena, correa..." autocomplete="off" list="sugerencias-productos">
+          <datalist id="sugerencias-productos">
+            <option value="Alimento Premium Perro Adulto">
+            <option value="Alimento Gato Esterilizado">
+            <option value="Snacks Naturales">
+            <option value="Pelota interactiva">
+            <option value="Arena sanitaria">
+            <option value="Shampoo antipulgas">
+          </datalist>
+        </div>
+        <button type="submit" class="btn">Buscar</button>
+        <button type="button" id="btn-limpiar" class="btn" style="background-color: var(--color-secundario);">Limpiar filtros</button>
+      </form>
+      <p id="resultado-info" class="mensaje-error" style="color: var(--color-secundario);"></p>
+    </section>
+
+    <section id="lista-productos">
+      <h2>Catálogo</h2>
+      <div class="grid" id="grid-productos">
+
+        <article class="card" data-categoria="perro" data-nombre="Alimento Premium Perro Adulto">
+          <a href="detalle-producto.html?id=1">
+            <img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=400" alt="Alimento Premium Perro Adulto">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=1">Alimento Premium Perro Adulto</a></h3>
+            <p>$18.990</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <article class="card" data-categoria="perro" data-nombre="Snacks Naturales Perro">
+          <a href="detalle-producto.html?id=2">
+            <img src="https://images.unsplash.com/photo-1601758174114-e711c0cbaa69?w=400" alt="Snacks Naturales para perro">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=2">Snacks Naturales</a></h3>
+            <p>$5.990</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <article class="card" data-categoria="gato" data-nombre="Alimento Gato Esterilizado">
+          <a href="detalle-producto.html?id=3">
+            <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400" alt="Alimento para gato esterilizado">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=3">Alimento Gato Esterilizado</a></h3>
+            <p>$16.490</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <article class="card" data-categoria="gato" data-nombre="Arena Sanitaria Aglomerante">
+          <a href="detalle-producto.html?id=4">
+            <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=400" alt="Arena sanitaria para gato">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=4">Arena Sanitaria Aglomerante</a></h3>
+            <p>$9.990</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <article class="card" data-categoria="juguetes" data-nombre="Pelota Interactiva">
+          <a href="detalle-producto.html?id=5">
+            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400" alt="Pelota interactiva para mascotas">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=5">Pelota Interactiva</a></h3>
+            <p>$7.490</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <article class="card" data-categoria="juguetes" data-nombre="Correa Ajustable">
+          <a href="detalle-producto.html?id=6">
+            <img src="https://images.unsplash.com/photo-1601758003122-53c40e686a19?w=400" alt="Correa ajustable para perro">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=6">Correa Ajustable</a></h3>
+            <p>$12.990</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <article class="card" data-categoria="salud" data-nombre="Shampoo Antipulgas">
+          <a href="detalle-producto.html?id=7">
+            <img src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=400" alt="Shampoo antipulgas para mascotas">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=7">Shampoo Antipulgas</a></h3>
+            <p>$8.990</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+        <article class="card" data-categoria="salud" data-nombre="Vitaminas Multiespecie">
+          <a href="detalle-producto.html?id=8">
+            <img src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?w=400" alt="Vitaminas para mascotas">
+          </a>
+          <div class="card-body">
+            <h3><a href="detalle-producto.html?id=8">Vitaminas Multiespecie</a></h3>
+            <p>$11.990</p>
+            <button type="button" class="btn btn-agregar">Agregar al carrito</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-contenido">
+      <div>
+        <h3>PawPets</h3>
+        <p>Petshop y cuidado animal para toda la familia.</p>
+      </div>
+      <div>
+        <h3>Enlaces</h3>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="blogs.html">Blog</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div>
+        <h3>Contáctanos</h3>
+        <a href="tel:+56912345678">+56 9 1234 5678</a>
+        <a href="mailto:contacto@pawpets.cl">contacto@pawpets.cl</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PawPets. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/productos.js"></script>
+</body>
+</html>
