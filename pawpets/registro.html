@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Cuenta | PawPets</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">🐾 PawPets</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li><a href="carrito.html">Carrito</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="registro.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Crear Cuenta</h1>
+      <p>Únete a la comunidad PawPets y accede a descuentos exclusivos.</p>
+    </section>
+
+    <form id="form-registro" novalidate autocomplete="on">
+      <div class="campo">
+        <label for="reg-nombre">Nombre completo</label>
+        <input type="text" id="reg-nombre" name="nombre" placeholder="Ej: Leandro Varela" autocomplete="name" required minlength="3">
+        <p class="mensaje-error" id="error-reg-nombre"></p>
+      </div>
+
+      <div class="campo">
+        <label for="reg-email">Correo electrónico</label>
+        <input type="email" id="reg-email" name="email" placeholder="tuemail@ejemplo.com" autocomplete="email" required>
+        <p class="mensaje-error" id="error-reg-email"></p>
+      </div>
+
+      <div class="campo">
+        <label for="reg-telefono">Teléfono</label>
+        <input type="tel" id="reg-telefono" name="telefono" placeholder="+56 9 1234 5678" autocomplete="tel" required pattern="^[0-9+\s]{8,15}$">
+        <p class="mensaje-error" id="error-reg-telefono"></p>
+      </div>
+
+      <div class="campo">
+        <label for="reg-password">Contraseña</label>
+        <input type="password" id="reg-password" name="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required minlength="6">
+        <p class="mensaje-error" id="error-reg-password"></p>
+      </div>
+
+      <div class="campo">
+        <label for="reg-password2">Confirmar contraseña</label>
+        <input type="password" id="reg-password2" name="password2" placeholder="Repite tu contraseña" autocomplete="new-password" required minlength="6">
+        <p class="mensaje-error" id="error-reg-password2"></p>
+      </div>
+
+      <div class="campo" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+        <input type="checkbox" id="reg-terminos" name="terminos" style="width: auto;" required>
+        <label for="reg-terminos" style="margin: 0;">Acepto los términos y condiciones</label>
+      </div>
+      <p class="mensaje-error" id="error-reg-terminos"></p>
+
+      <button type="submit" class="btn" style="width: 100%;">Crear cuenta</button>
+      <p id="mensaje-registro-exito" class="mensaje-error" style="color: var(--color-exito); text-align: center;"></p>
+      <p style="text-align: center; margin-top: 1rem;">¿Ya tienes cuenta? <a href="login.html" style="color: var(--color-secundario); font-weight: 600;">Inicia sesión</a></p>
+    </form>
+  </main>
+
+  <footer>
+    <div class="footer-contenido">
+      <div>
+        <h3>PawPets</h3>
+        <p>Petshop y cuidado animal para toda la familia.</p>
+      </div>
+      <div>
+        <h3>Enlaces</h3>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="blogs.html">Blog</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div>
+        <h3>Contáctanos</h3>
+        <a href="tel:+56912345678">+56 9 1234 5678</a>
+        <a href="mailto:contacto@pawpets.cl">contacto@pawpets.cl</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PawPets. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/validaciones.js"></script>
+</body>
+</html>
