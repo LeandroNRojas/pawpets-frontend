@@ -56,7 +56,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".btn-agregar").forEach(function (boton) {
     boton.addEventListener("click", function () {
       const card = boton.closest(".card");
-      const nombre = card.dataset.nombre;
+      const producto = {
+        id: parseInt(card.dataset.id),
+        nombre: card.dataset.nombre,
+        precio: parseInt(card.dataset.precio)
+      };
+
+      agregarAlCarrito(producto, 1);
+
       boton.textContent = "¡Agregado! ✓";
       boton.disabled = true;
 
@@ -64,8 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
         boton.textContent = "Agregar al carrito";
         boton.disabled = false;
       }, 1500);
-
-      console.log("Producto agregado al carrito:", nombre);
     });
   });
 });

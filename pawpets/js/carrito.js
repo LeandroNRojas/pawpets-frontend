@@ -4,12 +4,16 @@ let carrito = [
   { id: 3, nombre: "Alimento Gato Esterilizado", precio: 16490, cantidad: 2 }
 ];
 
+// ===== LÓGICA DEL CARRITO (conectado a localStorage) =====
+
 function renderizarCarrito() {
   const lista = document.getElementById("lista-carrito");
   const vacio = document.getElementById("carrito-vacio");
   const totalSpan = document.getElementById("carrito-total");
 
   if (!lista) return;
+
+  const carrito = obtenerCarrito();
 
   if (carrito.length === 0) {
     lista.innerHTML = "";
@@ -20,11 +24,9 @@ function renderizarCarrito() {
 
   vacio.style.display = "none";
   lista.innerHTML = "";
-  let total = 0;
 
   carrito.forEach(function (item, index) {
     const subtotal = item.precio * item.cantidad;
-    total += subtotal;
 
     const fila = document.createElement("div");
     fila.className = "card";
@@ -39,25 +41,36 @@ function renderizarCarrito() {
         '<label for="cantidad-' + index + '" style="margin:0;">Cant.</label>' +
         '<input type="number" id="cantidad-' + index + '" min="1" max="10" value="' + item.cantidad + '" style="width:60px; padding:0.4rem;">' +
         '<span style="min-width:90px; text-align:right; font-weight:bold;">$' + subtotal.toLocaleString("es-CL") + '</span>' +
-        '<button type="button" class="btn btn-eliminar" data-index="' + index + '" style="background-color: var(--color-error); padding: 0.5rem 0.8rem;">✕</button>' +
+        '<button type="button" class="btn btn-eliminar" data-id="' + item.id + '" style="background-color: var(--color-error); padding: 0.5rem 0.8rem;">✕</button>' +
       '</div>';
     lista.appendChild(fila);
   });
 
+  const total = calcularTotalCarrito(carrito);
   totalSpan.textContent = "$" + total.toLocaleString("es-CL");
 
-  // Eventos de cambio de cantidad
   carrito.forEach(function (item, index) {
     const input = document.getElementById("cantidad-" + index);
     if (input) {
       input.addEventListener("change", function () {
         let valor = parseInt(input.value);
         if (isNaN(valor) || valor < 1) valor = 1;
-        carrito[index].cantidad = valor;
+        actualizarCantidadCarrito(item.id, valor);
         renderizarCarrito();
       });
     }
   });
+
+  document.querySelectorAll(".btn-eliminar").forEach(function (boton) {
+    boton.addEventListener("click", function () {
+      const id = parseInt(boton.dataset.id);
+      eliminarDelCarrito(id);
+      renderizarCarrito();
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", renderizarCarrito);
 
   // Eventos de eliminar producto
   document.querySelectorAll(".btn-eliminar").forEach(function (boton) {
@@ -67,6 +80,6 @@ function renderizarCarrito() {
       renderizarCarrito();
     });
   });
-}
+
 
 document.addEventListener("DOMContentLoaded", renderizarCarrito);
