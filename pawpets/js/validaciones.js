@@ -1,6 +1,5 @@
 // ===== VALIDACIONES DE FORMULARIOS (login, registro, checkout del carrito) =====
 
-// Muestra un mensaje de error específico en el campo indicado
 function mostrarError(inputId, errorId, mensaje) {
   const input = document.getElementById(inputId);
   const error = document.getElementById(errorId);
@@ -56,8 +55,28 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const mensajeExito = document.getElementById("mensaje-login-exito");
+      
       if (valido) {
-        mensajeExito.textContent = "✓ Inicio de sesión exitoso. Redirigiendo...";
+        // Obtener usuario desde localStorage
+        const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioRegistrado"));
+
+        // Verificar credenciales
+        if (
+          usuarioGuardado &&
+          usuarioGuardado.email === email.trim().toLowerCase() &&
+          usuarioGuardado.password === password
+        ) {
+          localStorage.setItem("sesionActiva", JSON.stringify(usuarioGuardado));
+          mensajeExito.textContent = "✓ Inicio de sesión exitoso. Redirigiendo...";
+
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1500);
+
+        } else {
+          mostrarError("login-email", "error-login-email", "Correo o contraseña incorrectos.");
+          mensajeExito.textContent = "";
+        }
       } else {
         mensajeExito.textContent = "";
       }
@@ -124,7 +143,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const mensajeExito = document.getElementById("mensaje-registro-exito");
       if (valido) {
+        const usuarioNuevo = {
+          nombre: nombre.trim(),
+          email: email.trim().toLowerCase(),
+          telefono: telefono.trim(),
+          password: password
+        };
+
+        localStorage.setItem("usuarioRegistrado", JSON.stringify(usuarioNuevo));
+
         mensajeExito.textContent = "✓ Cuenta creada exitosamente. Ya puedes iniciar sesión.";
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
       } else {
         mensajeExito.textContent = "";
       }
