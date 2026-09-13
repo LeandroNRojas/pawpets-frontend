@@ -212,4 +212,60 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // ===== FORMULARIO DE CONTACTO =====
+  const formContacto = document.getElementById("form-contacto");
+  if (formContacto) {
+    formContacto.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      let valido = true;
+ 
+      const nombre = document.getElementById("cont-nombre").value;
+      const email = document.getElementById("cont-email").value;
+      const comentario = document.getElementById("cont-comentario").value;
+ 
+      if (nombre.trim() === "") {
+        mostrarError("cont-nombre", "error-cont-nombre", "El nombre es obligatorio.");
+        valido = false;
+      } else if (nombre.trim().length > 100) {
+        mostrarError("cont-nombre", "error-cont-nombre", "El nombre no puede superar los 100 caracteres.");
+        valido = false;
+      } else {
+        mostrarError("cont-nombre", "error-cont-nombre", "");
+      }
+ 
+      // El correo es opcional, pero si se escribe algo debe ser válido y de un dominio permitido
+      if (email.trim() !== "") {
+        if (email.trim().length > 100) {
+          mostrarError("cont-email", "error-cont-email", "El correo no puede superar los 100 caracteres.");
+          valido = false;
+        } else if (!validarCorreoDominio(email)) {
+          mostrarError("cont-email", "error-cont-email", "Solo se aceptan correos @duoc.cl, @profesor.duoc.cl o @gmail.com.");
+          valido = false;
+        } else {
+          mostrarError("cont-email", "error-cont-email", "");
+        }
+      } else {
+        mostrarError("cont-email", "error-cont-email", "");
+      }
+ 
+      if (comentario.trim() === "") {
+        mostrarError("cont-comentario", "error-cont-comentario", "Cuéntanos en qué te podemos ayudar.");
+        valido = false;
+      } else if (comentario.trim().length > 500) {
+        mostrarError("cont-comentario", "error-cont-comentario", "El comentario no puede superar los 500 caracteres.");
+        valido = false;
+      } else {
+        mostrarError("cont-comentario", "error-cont-comentario", "");
+      }
+ 
+      const mensajeExito2 = document.getElementById("mensaje-contacto-exito");
+      if (valido) {
+        mensajeExito2.textContent = "✓ Mensaje enviado. Te responderemos pronto.";
+        formContacto.reset();
+      } else {
+        mensajeExito2.textContent = "";
+      }
+    });
+  }
+ 
 });
