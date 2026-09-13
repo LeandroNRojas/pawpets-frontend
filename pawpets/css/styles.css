@@ -36,31 +36,52 @@ ul {
   list-style: none;
 }
 
-/* ===== HEADER Y NAV (se repite en todas las páginas) ===== */
+/* ===== HEADER Y NAV ===== */
 header {
   background-color: var(--color-oscuro);
   color: #fff;
-  padding: 1rem 2rem;
+  padding: 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  height: 70px; /* Mantiene la barra compacta */
+  position: relative; /* Permite posicionar el logo fuera del flujo */
 }
 
+/* Logo con posicionamiento absoluto para sobresalir */
 header .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color-primario);
+  position: absolute;
+  top: 0,1px; /* Controla la posición vertical del logo */
+  left: 1.5rem;
+  z-index: 10;
+}
+
+/* Control único de dimensiones y color del SVG */
+.logo-svg {
+  width: auto;
+  height: 120px; /* Tamaño visualmente proporcional dentro de los 150px de espacio */
+  display: block;
+}
+
+.logo-svg g,
+.logo-svg path {
+  fill: var(--color-primario) !important; /* Aplica el naranja de la marca */
+}
+
+/* Espaciado del menú para evitar colisión con el logo */
+nav {
+  margin-left: 180px; 
 }
 
 nav ul {
   display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
 }
 
 nav a {
   color: #fff;
+  font-size: 0.95rem;
   font-weight: 500;
   transition: color 0.2s;
 }
@@ -253,4 +274,20 @@ footer {
   border-top: 1px solid #444;
   font-size: 0.85rem;
   color: #aaa;
+}
+
+/* Limita el tamaño del SVG para que encaje en la barra */
+.logo-svg {
+  width: auto;
+  height: 150px;
+}
+
+/* Fuerza el color del logo para que resalte sobre el fondo oscuro */
+.logo-svg g,
+.logo-svg path {
+  fill: #ffffff !important;
+}
+
+nav {
+  margin-left: 170px;
 }
