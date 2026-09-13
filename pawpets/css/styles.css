@@ -124,6 +124,14 @@ main {
   transition: transform 0.2s;
 }
 
+/* Solo las tarjetas dentro de una grilla (Blog, Productos, Adopción) se estiran en columna.
+   El carrito también usa la clase .card pero en fila (no está dentro de .grid), así que no le afecta. */
+.grid .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .card:hover {
   transform: translateY(-4px);
 }
@@ -132,14 +140,33 @@ main {
   height: 160px;
   width: 100%;
   object-fit: cover;
+  object-position: center;
+}
+
+.card img.foto-arriba {
+  object-position: top;
 }
 
 .card-body {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .card-body h3 {
   margin-bottom: 0.5rem;
+}
+
+.card-body p {
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.card-body .btn {
+  display: block;
+  text-align: center;
+  margin-top: auto;
 }
 
 section > h2 {
@@ -164,6 +191,74 @@ section > h2 {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* ===== BOTÓN "VOLVER" (blog, detalle de producto) ===== */
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1.5rem 0;
+  background-color: var(--color-primario);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.3rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.15s, background-color 0.2s;
+}
+
+.volver:hover {
+  background-color: #e5732a;
+  transform: translateY(-2px);
+}
+
+/* ===== ARTÍCULO DE BLOG (detalle) ===== */
+.articulo-blog {
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.articulo-blog img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.articulo-blog h1 {
+  color: var(--color-secundario);
+  margin-bottom: 1rem;
+}
+
+.articulo-blog h2 {
+  color: var(--color-primario);
+  margin: 1.5rem 0 0.5rem;
+}
+
+.articulo-blog p {
+  margin-bottom: 0.75rem;
+}
+
+.articulo-blog ul {
+  list-style: disc;
+  margin: 0 0 1rem 1.5rem;
+}
+
+.articulo-blog li {
+  margin-bottom: 0.4rem;
+}
+
+.articulo-blog a {
+  color: var(--color-secundario);
+  font-weight: 600;
+  text-decoration: underline;
 }
 
 /* ===== FORMULARIOS (login, registro, contacto) ===== */
@@ -194,6 +289,12 @@ form {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
+}
+
+.campo textarea {
+  resize: none;
+  overflow-y: hidden;
+  min-height: 3rem;
 }
 
 .campo input:focus,

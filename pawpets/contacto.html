@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | PawPets</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">🐾 PawPets</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="blogs.html">Blog</a></li>
+        <li><a href="carrito.html">Carrito</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+        <li><a href="registro.html">Registrarse</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Contáctanos</h1>
+      <p>¿Tienes dudas sobre un producto, tu pedido o quieres adoptar a una de nuestras mascotas? Escríbenos y te responderemos a la brevedad.</p>
+    </section>
+
+    <form id="form-contacto" novalidate autocomplete="on">
+      <div class="campo">
+        <label for="cont-nombre">Nombre completo</label>
+        <input type="text" id="cont-nombre" name="nombre" placeholder="Ej: Javier Lobos" autocomplete="name" maxlength="100" required>
+        <p class="mensaje-error" id="error-cont-nombre"></p>
+      </div>
+
+      <div class="campo">
+        <label for="cont-email">Correo electrónico</label>
+        <input type="email" id="cont-email" name="email" placeholder="tuemail@ejemplo.com" autocomplete="email" maxlength="100">
+        <p class="mensaje-error" id="error-cont-email"></p>
+      </div>
+
+      <div class="campo">
+        <label for="cont-comentario">Comentario</label>
+        <textarea id="cont-comentario" name="comentario" rows="5" placeholder="Cuéntanos en qué te podemos ayudar..." maxlength="500" required></textarea>
+        <p class="mensaje-error" id="error-cont-comentario"></p>
+      </div>
+
+      <button type="submit" class="btn" style="width: 100%;">Enviar mensaje</button>
+      <p id="mensaje-contacto-exito" class="mensaje-error" style="color: var(--color-exito); text-align: center;"></p>
+    </form>
+  </main>
+
+  <footer>
+    <div class="footer-contenido">
+      <div>
+        <h3>PawPets</h3>
+        <p>Petshop y cuidado animal para toda la familia.</p>
+      </div>
+      <div>
+        <h3>Enlaces</h3>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="blogs.html">Blog</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div>
+        <h3>Contáctanos</h3>
+        <a href="tel:+56912345678">+56 9 1234 5678</a>
+        <a href="mailto:contacto@pawpets.cl">contacto@pawpets.cl</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PawPets. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/carrito-storage.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/validaciones.js"></script>
+</body>
+</html>

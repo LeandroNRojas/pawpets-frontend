@@ -43,3 +43,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+// Hace que cualquier <textarea> del sitio crezca solo según el texto que se escribe,
+// en vez de dejar que el usuario lo arrastre manualmente (evita que quede gigante y feo).
+document.addEventListener("DOMContentLoaded", function () {
+  const areasDeTexto = document.querySelectorAll("textarea");
+  areasDeTexto.forEach(function (textarea) {
+    function ajustarAltura() {
+      textarea.style.height = "auto";
+      textarea.style.height = textarea.scrollHeight + "px";
+    }
+    ajustarAltura();
+    textarea.addEventListener("input", ajustarAltura);
+  });
+});
+
+// Si se llega a Contacto desde un botón "¿Te interesa? Contáctanos" (?mascota=Nombre),
+// precompleta el mensaje automáticamente y ajusta la altura del textarea.
+document.addEventListener("DOMContentLoaded", function () {
+  const parametros = new URLSearchParams(window.location.search);
+  const mascota = parametros.get("mascota");
+  const comentario = document.getElementById("cont-comentario");
+ 
+  if (mascota && comentario) {
+    comentario.value = `Hola, me interesa adoptar a ${mascota}. ¿Podrían darme más información?`;
+    comentario.dispatchEvent(new Event("input"));
+  }
+});
+ 
