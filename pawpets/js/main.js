@@ -70,4 +70,20 @@ document.addEventListener("DOMContentLoaded", function () {
     comentario.dispatchEvent(new Event("input"));
   }
 });
- 
+
+//Funcion para replicar header en todas las paginas.
+document.addEventListener('DOMContentLoaded', () => {
+  const headerContainer = document.querySelector('header');
+  
+  if (headerContainer) {
+    fetch('header.html')
+      .then(response => {
+        if (!response.ok) throw new Error('No se pudo cargar el header');
+        return response.text();
+      })
+      .then(data => {
+        headerContainer.innerHTML = data;
+      })
+      .catch(error => console.error('Error cargando el encabezado:', error));
+  }
+});
