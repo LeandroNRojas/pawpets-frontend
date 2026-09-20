@@ -1,6 +1,5 @@
 // ===== VALIDACIONES DE FORMULARIOS (login, registro, checkout del carrito) =====
 
-// Muestra un mensaje de error específico en el campo indicado
 function mostrarError(inputId, errorId, mensaje) {
   const input = document.getElementById(inputId);
   const error = document.getElementById(errorId);
@@ -22,6 +21,14 @@ function validarEmail(valor) {
   const patron = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return patron.test(valor.trim());
 }
+
+// Cuenta administrativa fija para separar el acceso del administrador y del cliente.
+const usuarioAdministrador = {
+  nombre: "Administrador",
+  email: "admin@pawpets.cl",
+  password: "admin123",
+  rol: "administrador"
+};
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -56,8 +63,38 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const mensajeExito = document.getElementById("mensaje-login-exito");
+      
       if (valido) {
-        mensajeExito.textContent = "✓ Inicio de sesión exitoso. Redirigiendo...";
+        // Obtener usuario desde localStorage
+        const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioRegistrado"));
+
+        // Verificar credenciales
+        const credencialesAdministrador =
+          usuarioAdministrador.email === email.trim().toLowerCase() &&
+          usuarioAdministrador.password === password;
+        const credencialesCliente =
+          usuarioGuardado &&
+          usuarioGuardado.email === email.trim().toLowerCase() &&
+          usuarioGuardado.password === password;
+
+        if (credencialesAdministrador || credencialesCliente) {
+          const usuarioActivo = credencialesAdministrador
+            ? usuarioAdministrador
+            : { ...usuarioGuardado, rol: usuarioGuardado.rol || "cliente" };
+
+          localStorage.setItem("sesionActiva", JSON.stringify(usuarioActivo));
+          mensajeExito.textContent = "✓ Inicio de sesión exitoso. Redirigiendo...";
+
+          setTimeout(() => {
+            window.location.href = usuarioActivo.rol === "administrador"
+              ? "admin-dashboard.html"
+              : "index.html";
+          }, 1500);
+
+        } else {
+          mostrarError("login-email", "error-login-email", "Correo o contraseña incorrectos.");
+          mensajeExito.textContent = "";
+        }
       } else {
         mensajeExito.textContent = "";
       }
@@ -124,7 +161,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const mensajeExito = document.getElementById("mensaje-registro-exito");
       if (valido) {
+        const usuarioNuevo = {
+          nombre: nombre.trim(),
+          email: email.trim().toLowerCase(),
+          telefono: telefono.trim(),
+          password: password,
+          rol: "cliente"
+        };
+
+        localStorage.setItem("usuarioRegistrado", JSON.stringify(usuarioNuevo));
+
         mensajeExito.textContent = "✓ Cuenta creada exitosamente. Ya puedes iniciar sesión.";
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
       } else {
         mensajeExito.textContent = "";
       }
@@ -180,4 +231,60 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // ===== FORMULARIO DE CONTACTO =====
+  const formContacto = document.getElementById("form-contacto");
+  if (formContacto) {
+    formContacto.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      let valido = true;
+ 
+      const nombre = document.getElementById("cont-nombre").value;
+      const email = document.getElementById("cont-email").value;
+      const comentario = document.getElementById("cont-comentario").value;
+ 
+      if (nombre.trim() === "") {
+        mostrarError("cont-nombre", "error-cont-nombre", "El nombre es obligatorio.");
+        valido = false;
+      } else if (nombre.trim().length > 100) {
+        mostrarError("cont-nombre", "error-cont-nombre", "El nombre no puede superar los 100 caracteres.");
+        valido = false;
+      } else {
+        mostrarError("cont-nombre", "error-cont-nombre", "");
+      }
+ 
+      // El correo es opcional, pero si se escribe algo debe ser válido y de un dominio permitido
+      if (email.trim() !== "") {
+        if (email.trim().length > 100) {
+          mostrarError("cont-email", "error-cont-email", "El correo no puede superar los 100 caracteres.");
+          valido = false;
+        } else if (!validarCorreoDominio(email)) {
+          mostrarError("cont-email", "error-cont-email", "Solo se aceptan correos @duoc.cl, @profesor.duoc.cl o @gmail.com.");
+          valido = false;
+        } else {
+          mostrarError("cont-email", "error-cont-email", "");
+        }
+      } else {
+        mostrarError("cont-email", "error-cont-email", "");
+      }
+ 
+      if (comentario.trim() === "") {
+        mostrarError("cont-comentario", "error-cont-comentario", "Cuéntanos en qué te podemos ayudar.");
+        valido = false;
+      } else if (comentario.trim().length > 500) {
+        mostrarError("cont-comentario", "error-cont-comentario", "El comentario no puede superar los 500 caracteres.");
+        valido = false;
+      } else {
+        mostrarError("cont-comentario", "error-cont-comentario", "");
+      }
+ 
+      const mensajeExito2 = document.getElementById("mensaje-contacto-exito");
+      if (valido) {
+        mensajeExito2.textContent = "✓ Mensaje enviado. Te responderemos pronto.";
+        formContacto.reset();
+      } else {
+        mensajeExito2.textContent = "";
+      }
+    });
+  }
+ 
 });
