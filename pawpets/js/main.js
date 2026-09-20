@@ -7,20 +7,20 @@ function actualizarMenuSesion() {
     const navUl = document.querySelector("header nav ul");
 
     if (navUl) {
-      // Buscar los enlaces de Login y Registro por su href o posición
+        // Ubica los enlaces que deben reemplazarse cuando hay una sesión activa.
       const linkLogin = navUl.querySelector('a[href="login.html"]');
       const linkRegistro = navUl.querySelector('a[href="registro.html"]');
 
-      // Ocultar o remover la opción de registro
+        // Un usuario autenticado ya no necesita ver la opción de registro.
       if (linkRegistro && linkRegistro.parentElement) {
         linkRegistro.parentElement.remove();
       }
 
-      // Reemplazar la opción de "Iniciar sesión" por "Hola, Nombre" y añadir "Cerrar sesión"
+        // Reemplaza el acceso al login por el saludo y la opción de cerrar sesión.
       if (linkLogin && linkLogin.parentElement) {
         const liLogin = linkLogin.parentElement;
         
-        // Extraer solo el primer nombre
+          // Muestra solo el primer nombre para mantener compacto el encabezado.
         const primerNombre = sesionActiva.nombre ? sesionActiva.nombre.split(" ")[0] : "Usuario";
 
         liLogin.innerHTML = `
@@ -37,12 +37,14 @@ function validarAccesoAdministrativo() {
   const esVistaAdministrativa = paginaActual.startsWith("admin-");
   const sesionActiva = JSON.parse(localStorage.getItem("sesionActiva"));
 
+    // Solo un usuario con rol administrador puede acceder a estas páginas.
   if (esVistaAdministrativa && (!sesionActiva || sesionActiva.rol !== "administrador")) {
     window.location.href = "login.html";
   }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Valida el acceso antes de habilitar las acciones de la página.
   validarAccesoAdministrativo();
 
   document.addEventListener("click", function (e) {

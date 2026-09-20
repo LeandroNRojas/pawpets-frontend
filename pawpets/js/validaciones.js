@@ -22,6 +22,7 @@ function validarEmail(valor) {
   return patron.test(valor.trim());
 }
 
+// Cuenta administrativa fija para separar el acceso del administrador y del cliente.
 const usuarioAdministrador = {
   nombre: "Administrador",
   email: "admin@pawpets.cl",
