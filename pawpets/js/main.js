@@ -1,10 +1,8 @@
 //codigo
 
-document.addEventListener("DOMContentLoaded", function () {
-  // 1. Obtener la sesión activa de localStorage
+function actualizarMenuSesion() {
   const sesionActiva = JSON.parse(localStorage.getItem("sesionActiva"));
 
-  // 2. Si hay un usuario logueado, modificar el menú superior
   if (sesionActiva) {
     const navUl = document.querySelector("header nav ul");
 
@@ -32,12 +30,24 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
+}
 
-  // 3. Escuchar el clic en el botón de Cerrar sesión (evento delegado)
+function validarAccesoAdministrativo() {
+  const paginaActual = window.location.pathname.split("/").pop();
+  const esVistaAdministrativa = paginaActual.startsWith("admin-");
+  const sesionActiva = JSON.parse(localStorage.getItem("sesionActiva"));
+
+  if (esVistaAdministrativa && (!sesionActiva || sesionActiva.rol !== "administrador")) {
+    window.location.href = "login.html";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  validarAccesoAdministrativo();
+
   document.addEventListener("click", function (e) {
     if (e.target && e.target.id === "btn-logout") {
       e.preventDefault();
-      // Eliminar la sesión activa y recargar la página
       localStorage.removeItem("sesionActiva");
       window.location.reload();
     }
@@ -83,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .then(data => {
         headerContainer.innerHTML = data;
+        actualizarMenuSesion();
       })
       .catch(error => console.error('Error cargando el encabezado:', error));
   }

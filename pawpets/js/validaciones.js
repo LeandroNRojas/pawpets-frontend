@@ -22,6 +22,13 @@ function validarEmail(valor) {
   return patron.test(valor.trim());
 }
 
+const usuarioAdministrador = {
+  nombre: "Administrador",
+  email: "admin@pawpets.cl",
+  password: "admin123",
+  rol: "administrador"
+};
+
 document.addEventListener("DOMContentLoaded", function () {
 
   // ===== FORMULARIO DE LOGIN =====
@@ -61,16 +68,26 @@ document.addEventListener("DOMContentLoaded", function () {
         const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioRegistrado"));
 
         // Verificar credenciales
-        if (
+        const credencialesAdministrador =
+          usuarioAdministrador.email === email.trim().toLowerCase() &&
+          usuarioAdministrador.password === password;
+        const credencialesCliente =
           usuarioGuardado &&
           usuarioGuardado.email === email.trim().toLowerCase() &&
-          usuarioGuardado.password === password
-        ) {
-          localStorage.setItem("sesionActiva", JSON.stringify(usuarioGuardado));
+          usuarioGuardado.password === password;
+
+        if (credencialesAdministrador || credencialesCliente) {
+          const usuarioActivo = credencialesAdministrador
+            ? usuarioAdministrador
+            : { ...usuarioGuardado, rol: usuarioGuardado.rol || "cliente" };
+
+          localStorage.setItem("sesionActiva", JSON.stringify(usuarioActivo));
           mensajeExito.textContent = "✓ Inicio de sesión exitoso. Redirigiendo...";
 
           setTimeout(() => {
-            window.location.href = "index.html";
+            window.location.href = usuarioActivo.rol === "administrador"
+              ? "admin-dashboard.html"
+              : "index.html";
           }, 1500);
 
         } else {
@@ -147,7 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
           nombre: nombre.trim(),
           email: email.trim().toLowerCase(),
           telefono: telefono.trim(),
-          password: password
+          password: password,
+          rol: "cliente"
         };
 
         localStorage.setItem("usuarioRegistrado", JSON.stringify(usuarioNuevo));
