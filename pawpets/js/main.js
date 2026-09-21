@@ -27,6 +27,14 @@ function actualizarMenuSesion() {
           <span style="color: #fff; margin-right: 0.5rem; font-weight: 600;">Hola, ${primerNombre}</span>
           <a href="#" id="btn-logout" style="color: var(--color-secundario, #ff7a00);">Cerrar sesión</a>
         `;
+
+        // Si quien inició sesión es administrador, agrega un acceso directo al panel,
+        // porque de otra forma no hay ninguna forma de llegar ahí desde la tienda.
+        if (sesionActiva.rol === "administrador") {
+          const liAdmin = document.createElement("li");
+          liAdmin.innerHTML = '<a href="admin-dashboard.html" style="color: var(--color-primario, #ff8a3d); font-weight: 700;">Panel Admin</a>';
+          navUl.insertBefore(liAdmin, liLogin);
+        }
       }
     }
   }
@@ -83,11 +91,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-//Funcion para replicar header en todas las paginas.
+//Funcion para replicar header en todas las paginas (excepto donde ya viene fijo, como el admin).
 document.addEventListener('DOMContentLoaded', () => {
   const headerContainer = document.querySelector('header');
-  
-  if (headerContainer) {
+
+  if (headerContainer && headerContainer.innerHTML.trim() === '') {
     fetch('header.html')
       .then(response => {
         if (!response.ok) throw new Error('No se pudo cargar el header');

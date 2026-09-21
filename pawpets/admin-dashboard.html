@@ -1,12 +1,122 @@
-<!-- Hola -->
- <html>
-    <head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | PawPets</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
 
-    </head>
-    <body>
-        <h1>Hola</h1>
-        <!-- Carga la validación que protege las vistas administrativas. -->
-        <script src="js/main.js"></script>
-    </body>
-    
- </html>
+  <header>
+    <div class="logo">🐾 PawPets · Admin</div>
+    <nav>
+      <ul>
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="admin-productos.html">Productos</a></li>
+        <li><a href="admin-usuarios.html">Usuarios</a></li>
+        <li><a href="index.html">Ver tienda</a></li>
+        <li><a href="login.html">Cerrar sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="admin-wrapper">
+
+    <div class="admin-barra">
+      <div>
+        <h1 id="saludo-admin">¡Hola, Administrador!</h1>
+        <p>Este es el resumen general de la tienda. Desde aquí puedes ir a administrar productos o usuarios.</p>
+      </div>
+    </div>
+
+    <section class="admin-stats">
+      <div class="admin-stat">
+        <span>Productos en catálogo</span>
+        <strong id="stat-productos">0</strong>
+      </div>
+      <div class="admin-stat">
+        <span>Productos sin stock</span>
+        <strong id="stat-sin-stock">0</strong>
+      </div>
+      <div class="admin-stat">
+        <span>Cuentas de cliente registradas</span>
+        <strong id="stat-usuarios">0</strong>
+      </div>
+    </section>
+
+    <div class="admin-lista-titulo">
+      <h2>Accesos rápidos</h2>
+    </div>
+
+    <div class="admin-guia" style="background:#fff; border-color: var(--admin-borde);">
+      <div class="admin-guia-pasos">
+
+        <div class="admin-guia-paso">
+          <div class="admin-guia-numero" aria-hidden="true">📦</div>
+          <div>
+            <strong>Administrar productos</strong>
+            <p>Agrega, edita o elimina los productos que se muestran en la tienda.</p>
+            <p style="margin-top:0.6rem;">
+              <a href="admin-productos.html" class="btn-primario" style="text-decoration:none;">Ir a Productos</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="admin-guia-paso">
+          <div class="admin-guia-numero" aria-hidden="true">👤</div>
+          <div>
+            <strong>Administrar usuarios</strong>
+            <p>Revisa las cuentas registradas y sus roles dentro del sistema.</p>
+            <p style="margin-top:0.6rem;">
+              <a href="admin-usuarios.html" class="btn-primario" style="text-decoration:none;">Ir a Usuarios</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="admin-guia-paso">
+          <div class="admin-guia-numero" aria-hidden="true">🛍️</div>
+          <div>
+            <strong>Ver la tienda</strong>
+            <p>Revisa cómo se ve la tienda para un cliente normal, sin salir del modo administrador.</p>
+            <p style="margin-top:0.6rem;">
+              <a href="index.html" class="btn-secundario" style="text-decoration:none;">Ver tienda</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-contenido">
+      <div>
+        <h3>PawPets</h3>
+        <p>Petshop y cuidado animal para toda la familia.</p>
+      </div>
+      <div>
+        <h3>Enlaces</h3>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="blogs.html">Blog</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div>
+        <h3>Contáctanos</h3>
+        <a href="tel:+56912345678">+56 9 1234 5678</a>
+        <a href="mailto:contacto@pawpets.cl">contacto@pawpets.cl</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PawPets. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Carga la validación que protege las vistas administrativas. -->
+  <script src="js/main.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>
