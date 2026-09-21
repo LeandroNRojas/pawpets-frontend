@@ -51,29 +51,57 @@ header {
 /* Logo con posicionamiento absoluto para sobresalir */
 header .logo {
   position: absolute;
-  top: 0,1px; /* Controla la posición vertical del logo */
+  top: 0;
   left: 1.5rem;
   z-index: 10;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* El logo entero (texto o SVG) es un link que siempre vuelve al inicio */
+header .logo a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 /* Control único de dimensiones y color del SVG */
 .logo-svg {
   width: auto;
-  height: 120px; /* Tamaño visualmente proporcional dentro de los 150px de espacio */
+  height: 150px;
   display: block;
 }
 
 .logo-svg g,
 .logo-svg path {
-  fill: var(--color-primario) !important; /* Aplica el naranja de la marca */
+  fill: #ffffff !important;
 }
 
-/* Espaciado del menú para evitar colisión con el logo */
+/* El nav ocupa el resto del ancho del header, separando el menú principal de los íconos */
 nav {
-  margin-left: 180px; 
+  flex: 1;
+  margin-left: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-nav ul {
+/* Fallback: cualquier <ul> hijo directo de <nav> queda en fila, aunque no use
+   las clases nav-principal/nav-iconos (por ejemplo, el <nav> simple del admin).
+   No afecta a .dropdown-cuenta porque ese <ul> no es hijo directo de <nav>. */
+nav > ul {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.nav-principal,
+.nav-iconos {
   display: flex;
   align-items: center;
   gap: 1.2rem;
@@ -89,6 +117,73 @@ nav a {
 nav a:hover,
 nav a:focus {
   color: var(--color-primario);
+}
+
+/* ===== ÍCONOS DE CUENTA Y CARRITO (Bootstrap Icons) ===== */
+.icono-cuenta,
+.icono-carrito {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+.icono-cuenta i,
+.icono-carrito i {
+  font-size: 1.35rem;
+  color: #fff;
+  transition: color 0.2s;
+}
+
+.icono-cuenta:hover i,
+.icono-cuenta:focus i,
+.icono-carrito:hover i,
+.icono-carrito:focus i {
+  color: var(--color-primario);
+}
+
+.menu-cuenta {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-cuenta {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  min-width: 170px;
+  padding: 0.4rem 0;
+  z-index: 20;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dropdown-cuenta li {
+  list-style: none;
+}
+
+.dropdown-cuenta a {
+  display: block;
+  padding: 0.65rem 1rem;
+  color: var(--color-oscuro, #222);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.dropdown-cuenta a:hover {
+  background-color: #f2f2f2;
+  color: var(--color-primario);
+}
+
+/* Se muestra al pasar el mouse por el ícono o el propio menú desplegado */
+.menu-cuenta:hover .dropdown-cuenta,
+.menu-cuenta:focus-within .dropdown-cuenta {
+  display: flex;
 }
 
 /* ===== MAIN / SECCIONES ===== */
@@ -375,20 +470,4 @@ footer {
   border-top: 1px solid #444;
   font-size: 0.85rem;
   color: #aaa;
-}
-
-/* Limita el tamaño del SVG para que encaje en la barra */
-.logo-svg {
-  width: auto;
-  height: 150px;
-}
-
-/* Fuerza el color del logo para que resalte sobre el fondo oscuro */
-.logo-svg g,
-.logo-svg path {
-  fill: #ffffff !important;
-}
-
-nav {
-  margin-left: 170px;
 }

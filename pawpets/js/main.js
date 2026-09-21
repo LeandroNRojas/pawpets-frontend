@@ -4,12 +4,14 @@ function actualizarMenuSesion() {
   const sesionActiva = JSON.parse(localStorage.getItem("sesionActiva"));
 
   if (sesionActiva) {
-    const navUl = document.querySelector("header nav ul");
+    // Se busca en todo el <nav> (no solo en el primer <ul>), porque ahora el
+    // menú de cuenta vive en un <ul> aparte, anidado dentro del ícono de cuenta.
+    const navCompleto = document.querySelector("header nav");
 
-    if (navUl) {
+    if (navCompleto) {
         // Ubica los enlaces que deben reemplazarse cuando hay una sesión activa.
-      const linkLogin = navUl.querySelector('a[href="login.html"]');
-      const linkRegistro = navUl.querySelector('a[href="registro.html"]');
+      const linkLogin = navCompleto.querySelector('a[href="login.html"]');
+      const linkRegistro = navCompleto.querySelector('a[href="registro.html"]');
 
         // Un usuario autenticado ya no necesita ver la opción de registro.
       if (linkRegistro && linkRegistro.parentElement) {
@@ -30,10 +32,10 @@ function actualizarMenuSesion() {
 
         // Si quien inició sesión es administrador, agrega un acceso directo al panel,
         // porque de otra forma no hay ninguna forma de llegar ahí desde la tienda.
-        if (sesionActiva.rol === "administrador") {
+        if (sesionActiva.rol === "administrador" && liLogin.parentElement) {
           const liAdmin = document.createElement("li");
           liAdmin.innerHTML = '<a href="admin-dashboard.html" style="color: var(--color-primario, #ff8a3d); font-weight: 700;">Panel Admin</a>';
-          navUl.insertBefore(liAdmin, liLogin);
+          liLogin.parentElement.insertBefore(liAdmin, liLogin);
         }
       }
     }
