@@ -1,2 +1,215 @@
-<!-- Carga la validación que protege las vistas administrativas. -->
-<script src="js/main.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrar Productos | PawPets</title>
+
+  <!-- styles.css primero (estilos generales del sitio) -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- admin.css después, para poder sobrescribir lo anterior -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">🐾 PawPets · Admin</div>
+    <nav>
+      <ul>
+        <li><a href="admin-dashboard.html">Dashboard</a></li>
+        <li><a href="admin-productos.html">Productos</a></li>
+        <li><a href="admin-usuarios.html">Usuarios</a></li>
+        <li><a href="index.html">Ver tienda</a></li>
+        <li><a href="login.html">Cerrar sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="admin-wrapper">
+
+    <!-- Barra de título + acción global -->
+    <div class="admin-barra">
+      <div>
+        <h1>Administrar productos</h1>
+        <p>Crea, edita y elimina los productos del catálogo.</p>
+      </div>
+      <!-- Vuelve a cargar los 8 productos de ejemplo (útil si borras todo) -->
+      <button type="button" id="btn-restablecer" class="btn">Restablecer catálogo</button>
+    </div>
+
+    <!-- Aviso de éxito/error. Empieza vacío y oculto; el JS lo llena -->
+    <div id="aviso" class="admin-aviso" role="status" aria-live="polite"></div>
+
+    <!-- ======================= ESTADÍSTICAS ======================= -->
+    <section class="admin-stats">
+      <div class="admin-stat">
+        <span>Productos en catálogo</span>
+        <strong id="stat-total">0</strong>
+      </div>
+      <div class="admin-stat">
+        <span>Sin stock</span>
+        <strong id="stat-agotados">0</strong>
+      </div>
+      <div class="admin-stat">
+        <span>Unidades totales</span>
+        <strong id="stat-unidades">0</strong>
+      </div>
+      <div class="admin-stat">
+        <span>Valor del inventario</span>
+        <strong id="stat-valor">$0</strong>
+      </div>
+    </section>
+
+    <!-- ======================= FORMULARIO ======================= -->
+    <section>
+      <!-- novalidate desactiva la validación automática del navegador,
+           para que la hagamos nosotros con JavaScript y mensajes propios -->
+      <form id="form-producto" class="admin-form" novalidate>
+
+        <!-- El título cambia entre "Nuevo producto" y "Editar producto" -->
+        <h2 id="titulo-form">Nuevo producto</h2>
+
+        <!-- Campo oculto: guarda el ID del producto que se está editando.
+             Si está vacío, significa que estamos CREANDO uno nuevo. -->
+        <input type="hidden" id="producto-id">
+
+        <div class="admin-form-grid">
+
+          <div class="campo">
+            <label for="nombre">Nombre del producto</label>
+            <input type="text" id="nombre" name="nombre"
+                   placeholder="Ej: Alimento Premium Perro Adulto">
+            <p class="mensaje-error" id="error-nombre"></p>
+          </div>
+
+          <div class="campo">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria">
+              <option value="">Selecciona una categoría</option>
+              <!-- El value debe coincidir con el data-categoria
+                   que ya usa productos.html -->
+              <option value="perro">Alimentos Perro</option>
+              <option value="gato">Alimentos Gato</option>
+              <option value="juguetes">Juguetes &amp; Accesorios</option>
+              <option value="salud">Salud</option>
+            </select>
+            <p class="mensaje-error" id="error-categoria"></p>
+          </div>
+
+          <div class="campo">
+            <label for="precio">Precio (CLP)</label>
+            <!-- type="number" muestra teclado numérico en celular.
+                 min y step son ayudas, pero igual validamos en JS -->
+            <input type="number" id="precio" name="precio"
+                   placeholder="18990" min="1" step="1">
+            <p class="mensaje-error" id="error-precio"></p>
+          </div>
+
+          <div class="campo">
+            <label for="stock">Stock (unidades)</label>
+            <input type="number" id="stock" name="stock"
+                   placeholder="25" min="0" step="1">
+            <p class="mensaje-error" id="error-stock"></p>
+          </div>
+
+          <div class="campo">
+            <label for="imagen">URL o ruta de la imagen</label>
+            <input type="text" id="imagen" name="imagen"
+                   placeholder="img/productos/alimento-perro.jpg">
+            <p class="mensaje-error" id="error-imagen"></p>
+          </div>
+
+          <div class="campo">
+            <label for="preview-label">Vista previa</label>
+            <!-- alt="" porque es decorativa: solo confirma que la ruta sirve -->
+            <img id="preview-imagen" class="admin-miniatura"
+                 style="width:80px;height:80px;" alt="" src="">
+          </div>
+
+        </div>
+
+        <div class="campo" style="margin-top:1rem;">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" name="descripcion" rows="3"
+                    placeholder="Describe el producto en al menos 10 caracteres"></textarea>
+          <p class="mensaje-error" id="error-descripcion"></p>
+        </div>
+
+        <div class="admin-form-acciones">
+          <button type="submit" class="btn" id="btn-guardar">Guardar producto</button>
+          <button type="button" class="btn" id="btn-cancelar"
+                  style="background-color: var(--color-secundario);">Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ======================= FILTROS + TABLA ======================= -->
+    <section>
+      <div class="admin-barra">
+        <h2>Catálogo actual</h2>
+        <div class="admin-barra" style="margin:0;">
+          <input type="search" id="buscar" placeholder="Buscar por nombre..."
+                 style="padding:0.6rem;border-radius:6px;border:1px solid #ddd;">
+          <select id="filtro-categoria"
+                  style="padding:0.6rem;border-radius:6px;border:1px solid #ddd;">
+            <option value="todos">Todas las categorías</option>
+            <option value="perro">Alimentos Perro</option>
+            <option value="gato">Alimentos Gato</option>
+            <option value="juguetes">Juguetes &amp; Accesorios</option>
+            <option value="salud">Salud</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="admin-tabla-scroll">
+        <table class="admin-tabla">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <!-- El <tbody> se llena completo desde JavaScript -->
+          <tbody id="tabla-productos"></tbody>
+        </table>
+      </div>
+
+      <p id="sin-resultados" class="admin-vacio" style="display:none;">
+        No hay productos que coincidan con la búsqueda.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-contenido">
+      <div>
+        <h3>PawPets</h3>
+        <p>Petshop y cuidado animal para toda la familia.</p>
+      </div>
+      <div>
+        <h3>Enlaces</h3>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="blogs.html">Blog</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div>
+        <h3>Contáctanos</h3>
+        <a href="tel:+56912345678">+56 9 1234 5678</a>
+        <a href="mailto:contacto@pawpets.cl">contacto@pawpets.cl</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PawPets. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- El script va al final: así el HTML ya existe cuando el JS lo busca -->
+  <script src="js/admin-productos.js"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+/* ============================================================
+   admin.css — estilos EXCLUSIVOS del panel de administración.
+   Se carga DESPUÉS de styles.css, así que puede sobrescribirlo.
+   ============================================================ */
+
+/* :root guarda "variables CSS". Si styles.css ya las define, estas
+   NO se aplican (las de styles.css ganan por orden de carga).
+   Las dejo como respaldo para que la página nunca se vea rota. */
+:root {
+  --admin-borde: #e2e2e2;        /* color de las líneas de la tabla */
+  --admin-fondo-suave: #f7f7f7;  /* fondo gris claro de encabezados */
+  --admin-peligro: #c0392b;      /* rojo para el botón Eliminar */
+  --admin-alerta: #e67e22;       /* naranjo para avisos de stock bajo */
+}
+
+/* Contenedor general del panel: centra el contenido y le da aire */
+.admin-wrapper {
+  max-width: 1100px;      /* ancho máximo: evita líneas larguísimas */
+  margin: 0 auto;         /* 0 arriba/abajo, auto a los lados = centrado */
+  padding: 1rem;          /* espacio interno para que no pegue a los bordes */
+}
+
+/* Barra superior del panel: título a la izquierda, acciones a la derecha */
+.admin-barra {
+  display: flex;                  /* activa flexbox: hijos en fila */
+  flex-wrap: wrap;                /* si no caben, bajan a otra línea */
+  justify-content: space-between; /* separa los extremos */
+  align-items: center;            /* los alinea verticalmente al centro */
+  gap: 1rem;                      /* separación mínima entre hijos */
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Tarjetas de estadísticas (arriba del formulario) ---------- */
+.admin-stats {
+  display: grid;                                              /* grilla */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* columnas
+     automáticas: cada una mide mínimo 180px y reparte el sobrante.
+     Esto hace la sección responsive SIN media queries. */
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.admin-stat {
+  background: #fff;
+  border: 1px solid var(--admin-borde);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.admin-stat span {
+  display: block;        /* el span pasa de línea (por defecto es inline) */
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.admin-stat strong {
+  font-size: 1.6rem;
+  color: var(--color-oscuro, #333);  /* usa la variable; si no existe, #333 */
+}
+
+/* ---------- Formulario de producto ---------- */
+.admin-form {
+  background: #fff;
+  border: 1px solid var(--admin-borde);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Grilla de dos columnas para los campos del formulario */
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+/* .campo ya existe en styles.css; aquí solo aseguro el apilado vertical */
+.admin-form .campo {
+  display: flex;
+  flex-direction: column;  /* label arriba, input abajo */
+}
+
+.admin-form label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+  padding: 0.6rem;
+  border: 1px solid var(--admin-borde);
+  border-radius: 6px;
+  font-family: inherit;   /* hereda la tipografía del sitio */
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box; /* el padding se cuenta DENTRO del ancho */
+}
+
+/* Marca en rojo el campo que falló la validación */
+.admin-form input.invalido,
+.admin-form select.invalido,
+.admin-form textarea.invalido {
+  border-color: var(--admin-peligro);
+}
+
+/* .mensaje-error ya existe; aquí solo ajusto tamaño y separación */
+.admin-form .mensaje-error {
+  color: var(--admin-peligro);
+  font-size: 0.8rem;
+  margin: 0.25rem 0 0;
+  min-height: 1rem;   /* reserva la altura: el formulario no "salta" */
+}
+
+/* Fila de botones del formulario */
+.admin-form-acciones {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+/* ---------- Tabla de productos ---------- */
+.admin-tabla-scroll {
+  overflow-x: auto;   /* en celular la tabla se desliza en horizontal
+                         en vez de romper el ancho de la página */
+  border: 1px solid var(--admin-borde);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.admin-tabla {
+  width: 100%;
+  border-collapse: collapse;  /* une los bordes de las celdas en uno solo */
+  min-width: 760px;           /* bajo esto, aparece el scroll horizontal */
+}
+
+.admin-tabla th,
+.admin-tabla td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--admin-borde);
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.92rem;
+}
+
+.admin-tabla thead th {
+  background: var(--admin-fondo-suave);
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* Fondo alterno en filas pares: se lee más fácil */
+.admin-tabla tbody tr:nth-child(even) { background: #fafafa; }
+
+/* Miniatura de la imagen del producto dentro de la tabla */
+.admin-miniatura {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;   /* recorta la foto para llenar el cuadro sin deformar */
+  border-radius: 6px;
+  display: block;
+  background: var(--admin-fondo-suave);
+}
+
+/* Etiqueta de categoría */
+.admin-etiqueta {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;   /* número enorme = píldora perfecta */
+  background: var(--admin-fondo-suave);
+  font-size: 0.78rem;
+}
+
+/* Colores del stock según cantidad (los asigna el JS) */
+.stock-ok     { color: var(--color-exito, #2e7d32); font-weight: 600; }
+.stock-bajo   { color: var(--admin-alerta);         font-weight: 600; }
+.stock-agotado{ color: var(--admin-peligro);        font-weight: 600; }
+
+/* Botones chicos dentro de la tabla */
+.btn-mini {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  font-family: inherit;
+}
+
+.btn-editar   { background: var(--color-secundario, #0277bd); }
+.btn-eliminar { background: var(--admin-peligro); }
+.btn-mini:hover { opacity: 0.85; }
+
+/* Mensaje de "no hay resultados" */
+.admin-vacio {
+  text-align: center;
+  padding: 2rem;
+  color: #777;
+}
+
+/* Aviso flotante de éxito/error (lo muestra el JS) */
+.admin-aviso {
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  display: none;          /* oculto por defecto; el JS lo cambia a block */
+  font-weight: 600;
+}
+
+.admin-aviso.exito  { background: #e8f5e9; color: #2e7d32; display: block; }
+.admin-aviso.error  { background: #fdecea; color: #c0392b; display: block; }
